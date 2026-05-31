@@ -9,18 +9,40 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "next": "16.2.6",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "lucide-react": "^1.16.0",
+    "next": "^16.2.6",
+    "pg": "^8.21.0",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "react-icons": "^5.6.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
+    "@types/pg": "^8.20.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.6",
+    "nodemon": "^3.1.14",
     "tailwindcss": "^4",
     "typescript": "^5"
-  }
+  },
+  "description": "Handcrafted Haven is a modern and community-driven digital marketplace designed to empower artisans, crafters, and independent creators by providing them with an online platform to showcase and sell their handmade products.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/loisemusungu/handcrafted-haven.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/loisemusungu/handcrafted-haven/issues"
+  },
+  "homepage": "https://github.com/loisemusungu/handcrafted-haven#readme"
 }
