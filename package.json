@@ -35,20 +35,24 @@
     "nodemon": "^3.1.14",
     "prisma": "6.15.0",
     "tailwindcss": "^4",
+    "ts-node": "^10.9.2",
     "typescript": "^5"
   },
   "description": "Handcrafted Haven is a modern and community-driven digital marketplace designed to empower artisans, crafters, and independent creators by providing them with an online platform to showcase and sell their handmade products.",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/loisemusungu/handcrafted-haven.git"
+    "url": "git+https://github.com/Alizenoch/Team-10-Handcrafted-Haven.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "module",
   "bugs": {
-    "url": "https://github.com/loisemusungu/handcrafted-haven/issues"
+    "url": "https://github.com/Alizenoch/Team-10-Handcrafted-Haven/issues"
   },
-  "homepage": "https://github.com/loisemusungu/handcrafted-haven#readme"
+  "homepage": "https://github.com/Alizenoch/Team-10-Handcrafted-Haven#readme",
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  }
 }

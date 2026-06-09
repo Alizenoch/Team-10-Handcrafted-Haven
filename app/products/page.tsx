@@ -1,11 +1,11 @@
-// ProductsPage.tsx
 "use client";
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import DashboardSkeleton from "@/components/DashboardSkeleton";
 import { ProductCreateForm } from "@/components/form/ProductCreateForm";
-import type { Product } from "@/types/product";
+// ⬇️ CHANGED: import Product type from Prisma instead of "@/types/product"
+import type { Product } from "@prisma/client";
 
 export default function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -94,7 +94,7 @@ export default function ProductsPage() {
               <div className="relative w-full h-48 bg-gray-100 overflow-hidden">
                 <Image
                   src={getValidImage(product.image)}
-                  alt={product.name}
+                  alt={product.title}   // ⬇️ CHANGED: was product.name
                   fill
                   sizes="(max-w-640px) 100vw, (max-w-1024px) 33vw, 25vw"
                   className="object-cover group-hover:scale-105 transition duration-300"
@@ -105,8 +105,11 @@ export default function ProductsPage() {
               {/* Data Content Block */}
               <div className="p-4 flex flex-col flex-grow">
                 <div className="flex items-start justify-between gap-2 mb-1">
-                  <h2 className="font-semibold text-gray-900 text-base line-clamp-1 title" title={product.name}>
-                    {product.name}
+                  <h2
+                    className="font-semibold text-gray-900 text-base line-clamp-1 title"
+                    title={product.title}   // ⬇️ CHANGED: was product.name
+                  >
+                    {product.title}         // ⬇️ CHANGED: was product.name
                   </h2>
                   {product.category && (
                     <span className="text-[11px] font-medium bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full whitespace-nowrap uppercase tracking-wider">
@@ -136,3 +139,4 @@ export default function ProductsPage() {
     </div>
   );
 }
+

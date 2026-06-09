@@ -35,6 +35,8 @@ model Product {
   title       String
   description String
   price       Float
+  category    String?
+  image       String?
   sellerId    Int
   seller      User     @relation(fields: [sellerId], references: [id])
   reviews     Review[]

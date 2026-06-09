@@ -1,22 +1,17 @@
 import { NextResponse } from "next/server";
-import pool from "../../lib/db";
+import prisma from "@/app/lib/db"; // adjust if your prisma client lives elsewhere
 
 // GET all products
 export async function GET() {
   try {
-    const result = await pool.query(
-      "SELECT * FROM products ORDER BY id DESC"
-    );
-
-    return NextResponse.json(result.rows);
+    const products = await prisma.product.findMany({
+      orderBy: { id: "desc" },
+    });
+    return NextResponse.json(products);
   } catch (error) {
     console.error("GET PRODUCTS ERROR:", error);
-
     return NextResponse.json(
-      {
-        error: "Failed to fetch products",
-        details: String(error),
-      },
+      { error: "Failed to fetch products" },
       { status: 500 }
     );
   }
@@ -26,34 +21,31 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
+    const { title, price, description, category, image, sellerId } = body;
 
-    console.log("BODY RECEIVED:", body);
-
-    const { name, price, description, category, image } = body;
-
-    if (!name || !price || !description) {
+    if (!title || !description || !price || !sellerId) {
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 }
       );
     }
 
-    const result = await pool.query(
-      `INSERT INTO products (name, price, description, category, image)
-       VALUES ($1, $2, $3, $4, $5)
-       RETURNING *`,
-      [name, price, description, category, image]
-    );
-
-    return NextResponse.json(result.rows[0], { status: 201 });
-  } catch (error: any) {
-    console.error("POST ERROR:", error);
-
-    return NextResponse.json(
-      {
-        error: "Failed to create product",
-        details: error.message,
+    const product = await prisma.product.create({
+      data: {
+        title,
+        description,
+        price: parseFloat(price), // ensure Float type
+        category,
+        image,
+        sellerId,
       },
+    });
+
+    return NextResponse.json(product, { status: 201 });
+  } catch (error) {
+    console.error("POST PRODUCT ERROR:", error);
+    return NextResponse.json(
+      { error: "Failed to create product" },
       { status: 500 }
     );
   }
