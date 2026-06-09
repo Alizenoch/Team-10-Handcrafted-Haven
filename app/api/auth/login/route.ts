@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import db from "@/lib/db";
-import { signToken } from "@/lib/auth";
+import db from "@/app/lib/db";
+import { signToken } from "@/app/lib/auth";
 
 export async function POST(req: Request) {
   const { email, password } = await req.json();
