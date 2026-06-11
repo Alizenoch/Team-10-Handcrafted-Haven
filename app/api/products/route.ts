@@ -1,12 +1,23 @@
 import { NextResponse } from "next/server";
-import prisma from "@/app/lib/db"; // adjust if your prisma client lives elsewhere
+import prisma from "@/app/lib/db";
 
-// GET all products
-export async function GET() {
+// GET all products or products by category
+export async function GET(req: Request) {
   try {
+    const { searchParams } = new URL(req.url);
+    const category = searchParams.get("category");
+
     const products = await prisma.product.findMany({
-      orderBy: { id: "desc" },
+      where: category
+        ? {
+            category,
+          }
+        : undefined,
+      orderBy: {
+        id: "desc",
+      },
     });
+
     return NextResponse.json(products);
   } catch (error) {
     console.error("GET PRODUCTS ERROR:", error);
@@ -34,7 +45,7 @@ export async function POST(req: Request) {
       data: {
         title,
         description,
-        price: parseFloat(price), // ensure Float type
+        price: parseFloat(price),
         category,
         image,
         sellerId,

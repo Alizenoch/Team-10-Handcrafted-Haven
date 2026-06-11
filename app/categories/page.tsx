@@ -3,15 +3,27 @@ import Link from "next/link";
 const categories = [
   {
     name: "Bilums",
-    image: "/images/bilum-bag.png",
+    image: "/images/bilums.png",
   },
   {
     name: "Jewelry",
-    image: "/images/jewelry.jpg",
+    image: "/images/jewelry.png",
   },
   {
-    name: "Wood Carvings",
-    image: "/images/carving.jpg",
+    name: "Wood carvings",
+    image: "/images/wood carvings.png",
+  },
+  {
+    name: "Baskets",
+    image: "/images/baskets.png",
+  },
+  {
+    name: "Pottery",
+    image: "/images/pottery.png",
+  },
+  {
+    name: "Paintings",
+    image: "/images/paintings.png",
   },
 ];
 

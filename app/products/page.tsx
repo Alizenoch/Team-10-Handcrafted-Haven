@@ -1,5 +1,6 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import DashboardSkeleton from "@/components/DashboardSkeleton";
@@ -8,6 +9,8 @@ import { ProductCreateForm } from "@/components/form/ProductCreateForm";
 import type { Product } from "@prisma/client";
 
 export default function ProductsPage() {
+  const searchParams = useSearchParams();
+  const selectedCategory = searchParams.get("category");
   const [products, setProducts] = useState<Product[]>([]);
   const [showForm, setShowForm] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -17,7 +20,11 @@ export default function ProductsPage() {
 
     async function fetchProducts() {
       try {
-        const response = await fetch("/api/products");
+        const response = await fetch(
+  selectedCategory
+    ? `/api/products?category=${encodeURIComponent(selectedCategory)}`
+    : "/api/products"
+);
         if (!response.ok) throw new Error("Network response error");
         
         const data = await response.json();
