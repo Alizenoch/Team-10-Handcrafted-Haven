@@ -3,7 +3,6 @@
 
 generator client {
   provider = "prisma-client-js"
-  
 }
 
 datasource db {
@@ -40,6 +39,8 @@ model Product {
   sellerId    Int
   seller      User     @relation(fields: [sellerId], references: [id])
   reviews     Review[]
+  artisanId   Int?     // new foreign key
+  artisan     Artisan? @relation(fields: [artisanId], references: [id])
 }
 
 model Review {
@@ -50,4 +51,13 @@ model Review {
   product   Product @relation(fields: [productId], references: [id])
   userId    Int
   user      User    @relation(fields: [userId], references: [id])
+}
+
+model Artisan {
+  id        Int       @id @default(autoincrement())
+  name      String
+  craft     String
+  bio       String
+  image     String?   // optional: store image path or URL
+  products  Product[] // relation to products
 }

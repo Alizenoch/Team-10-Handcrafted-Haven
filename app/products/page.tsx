@@ -25,6 +25,7 @@ export default function ProductsPage() {
         if (!response.ok) throw new Error("Network response error");
         
         const data = await response.json();
+        console.log("API response:", data);
         const productsArray = Array.isArray(data) ? data : data.products || [];
 
         if (isMounted) setProducts(productsArray);
