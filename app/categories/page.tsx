@@ -11,7 +11,7 @@ const categories = [
   },
   {
     name: "Wood carvings",
-    image: "/images/wood carvings.png",
+    image: "/images/wood_carvings.png",
   },
   {
     name: "Baskets",
