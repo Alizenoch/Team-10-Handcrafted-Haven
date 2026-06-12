@@ -1,21 +1,16 @@
+// app/api/products/route.ts
 import { NextResponse } from "next/server";
 import prisma from "@/app/lib/db";
 
-// GET all products or products by category
 export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
-    const category = searchParams.get("category");
+    const artisanId = searchParams.get("artisanId");
 
     const products = await prisma.product.findMany({
-      where: category
-        ? {
-            category,
-          }
-        : undefined,
-      orderBy: {
-        id: "desc",
-      },
+      where: artisanId ? { artisanId: Number(artisanId) } : {},
+      include: { artisan: true }, // ✅ include artisan relation so you can show artisan name
+      orderBy: { id: "desc" },
     });
 
     return NextResponse.json(products);
@@ -28,11 +23,10 @@ export async function GET(req: Request) {
   }
 }
 
-// POST new product
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { title, price, description, category, image, sellerId } = body;
+    const { title, price, description, category, image, sellerId, artisanId } = body;
 
     if (!title || !description || !price || !sellerId) {
       return NextResponse.json(
@@ -45,11 +39,13 @@ export async function POST(req: Request) {
       data: {
         title,
         description,
-        price: parseFloat(price),
+        price: parseFloat(price), // ensure Float type
         category,
         image,
         sellerId,
+        artisanId: artisanId ? Number(artisanId) : null, // ✅ link product to artisan if provided
       },
+      include: { artisan: true }, // return artisan info with product
     });
 
     return NextResponse.json(product, { status: 201 });
