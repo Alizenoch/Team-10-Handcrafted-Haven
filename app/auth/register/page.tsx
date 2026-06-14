@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 
 export default function RegisterPage() {
@@ -8,25 +9,35 @@ export default function RegisterPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const res = await fetch("/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password }),
-      });
+  
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setError("");
 
-      if (!res.ok) throw new Error("Registration failed");
-      window.location.href = "/auth/login";
-    } catch (err) {
-      console.error(err);
-      setError("Network error, please try again.");
+  try {
+    const res = await fetch("/api/auth/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, password }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      setError(data.error || "Registration failed");
+      return;
     }
+
+    window.location.href = "/auth/login";
+  } catch (err) {
+    console.error(err);
+    setError("Network error, please try again.");
+  }
   };
 
-  return (
-    <main className="p-6 max-w-md mx-auto">
+ 
+    return (
+    <main className="pt-28 px-6 max-w-md mx-auto">
       <h1 className="text-2xl font-bold mb-4">Register</h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
@@ -54,6 +65,19 @@ export default function RegisterPage() {
       </form>
 
       {error && <p className="text-red-500 mt-2">{error}</p>}
+
+            
+
+      <p className="mt-4 text-center text-sm">
+        Already have an account?{" "}
+        <Link
+          href="/auth/login"
+          className="text-green-600 hover:underline"
+        >
+          Login
+        </Link>
+      </p>
     </main>
+    
   );
 }

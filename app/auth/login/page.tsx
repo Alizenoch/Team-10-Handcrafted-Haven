@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 
 export default function LoginPage() {
@@ -17,7 +18,7 @@ export default function LoginPage() {
       });
 
       if (!res.ok) throw new Error("Login failed");
-      window.location.href = "/auth/profile";
+      window.location.href = "/dashboard";
     } catch (err) {
       console.error(err);
       setError("Network error, please try again.");
@@ -25,7 +26,8 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="p-6 max-w-md mx-auto">
+    
+    <main className="pt-28 px-6 max-w-md mx-auto">
       <h1 className="text-2xl font-bold mb-4">Login</h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
@@ -45,8 +47,21 @@ export default function LoginPage() {
         <button className="bg-blue-600 text-white p-2 rounded">Login</button>
       </form>
 
-      {error && <p className="text-red-500 mt-2">{error}</p>}
+        {error && <p className="text-red-500 mt-2">{error}</p>}
+        <p className="mt-4 text-center text-sm">
+        Don't have an account?{" "}
+        <Link
+        href="/auth/register"
+        className="text-green-600 hover:underline"
+       >
+       Create an Account
+      </Link>
+      </p>
+
+      
     </main>
+    
   );
+
 }
 

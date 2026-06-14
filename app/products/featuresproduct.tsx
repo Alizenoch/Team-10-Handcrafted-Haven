@@ -109,7 +109,7 @@ export default function FeaturesProductsPage() {
                   {/* Footer Control Block */}
                   <div className="mt-auto pt-3 border-t flex items-center justify-between gap-2">
                     <p className="text-base font-bold text-gray-900 whitespace-nowrap">
-                      KES {Number(product.price).toLocaleString()}
+                      USD {Number(product.price).toLocaleString()}
                     </p>
                     <button className="bg-blue-600 hover:bg-blue-700 text-white font-medium text-xs py-2 px-3 rounded-lg transition-colors shadow-sm active:scale-95 transform">
                       Add to Cart
