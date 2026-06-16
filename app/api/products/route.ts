@@ -11,6 +11,7 @@ export async function GET(req: Request) {
 
     const artisanId = searchParams.get("artisanId");
     const search = searchParams.get("search");
+    const category = searchParams.get("category");
 
     const products = await prisma.product.findMany({
       where: {
@@ -39,6 +40,12 @@ export async function GET(req: Request) {
               },
             },
           ],
+        }),
+        ...(category && {
+          category: {
+            contains: category,
+            mode: "insensitive",
+          },
         }),
       },
 

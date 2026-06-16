@@ -16,6 +16,7 @@ import AddToCartButton from "@/components/button/addCartButton";
   const searchParams = useSearchParams();
   const artisanId = searchParams.get("artisanId");
   const search = searchParams.get("search");
+  const category = searchParams.get("category");
 
   useEffect(() => {
     let isMounted = true;
@@ -32,6 +33,10 @@ if (search) {
   url += artisanId
     ? `&search=${search}`
     : `?search=${search}`;
+}
+
+if (category) {
+  url += (url.includes("?") ? "&" : "?") + `category=${category}`;
 }
 
         const response = await fetch(url);
@@ -57,7 +62,7 @@ if (search) {
     return () => {
       isMounted = false;
     };
-  }, [artisanId, search]);
+  }, [artisanId, search, category]);
 
   if (loading) {
     return (
