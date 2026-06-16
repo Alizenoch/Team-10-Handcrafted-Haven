@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
+import AddToCartButton from "@/components/button/addCartButton";
 
 const prisma = new PrismaClient();
 
@@ -61,6 +62,15 @@ export default async function ProductPage({
           <p className="text-2xl font-bold text-green-700">
           USD {Number(product.price).toLocaleString()}
          </p>
+
+         <AddToCartButton
+         product={{
+         id: product.id,
+         title: product.title,
+        price: Number(product.price),
+        image: product.image,
+       }}
+       />
 
          <Link
          href={`/products/${product.id}/review`}

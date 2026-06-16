@@ -13,6 +13,8 @@ import {
   User,
 } from "lucide-react";
 
+
+
  export default function Navbar() {
   const router = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -96,20 +98,27 @@ import {
               />
             </div>
 
-            <Heart size={20} />
-            <ShoppingCart size={20} />
+            
+            <Link
+            href="/cart"
+           className="flex items-center gap-1"
+           >
+           <ShoppingCart size={20} />
+          <span>Cart</span>
+          </Link>
+            
 
             <div className="flex items-center gap-2">
-    {!isLoggedIn ? (
-    <Link
-      href="/auth/login"
-      className="px-3 py-2 text-sm border rounded hover:bg-gray-100"
-    >
-      Login
-    </Link>
-     ) : (
-    <button
-      onClick={handleLogout}
+            {!isLoggedIn ? (
+            <Link
+           href="/auth/login"
+            className="px-3 py-2 text-sm border rounded hover:bg-gray-100"
+         >
+         Login
+         </Link>
+         ) : (
+        <button
+       onClick={handleLogout}
       className="px-3 py-2 text-sm bg-red-500 text-white rounded hover:bg-red-600"
       >
       Logout
@@ -151,8 +160,12 @@ import {
               />
             </div>
 
-            <Heart size={20} />
+            <Link href="/wishlist">
+              <Heart size={20} />
+            </Link>
+            <Link href="/cart">
             <ShoppingCart size={20} />
+            </Link>
             <div className="flex items-center gap-2">
             {!isLoggedIn ? (
             <Link

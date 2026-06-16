@@ -1,5 +1,6 @@
 import HeroSection from "@/components/herosection";
 import FeaturesProductsPage from "./products/featuresproduct";
+
 export default function Home() {
   return (
     <main>

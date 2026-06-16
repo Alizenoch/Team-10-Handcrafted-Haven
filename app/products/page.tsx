@@ -6,6 +6,7 @@ import { Suspense,useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import DashboardSkeleton from "@/components/DashboardSkeleton";
 import type { Product } from "@prisma/client";
+import AddToCartButton from "@/components/button/addCartButton";
 
   function ProductsContent() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -70,10 +71,8 @@ import type { Product } from "@prisma/client";
             </p>
           )}
 
-          
         </div>
-
-       
+        
       </div>
 
       {/* Back to Artisans link */}
@@ -136,15 +135,22 @@ import type { Product } from "@prisma/client";
                </p>
 
                <div className="flex gap-2">
-               <Link
-               href={`/products/${product.id}`}
-               className="bg-blue-600 hover:bg-blue-700 text-white font-medium text-xs py-2 px-3 rounded-lg transition-colors"
-              >
-               View Details
-               </Link>
+              <AddToCartButton
+               product={{
+              id: product.id,
+              title: product.title,
+              price: Number(product.price),
+              image: product.image,
+           }}
+           />
 
-              
-             </div>
+              <Link
+              href={`/products/${product.id}`}
+             className="bg-blue-600 hover:bg-blue-600 text-white font-medium text-xs py-2 px-3 rounded-lg transition-colors"
+          >
+          View Details
+           </Link>
+          </div>
             </div>
             </div>
             </div>
