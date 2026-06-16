@@ -1,5 +1,7 @@
+import Link from "next/link";
 import Image from "next/image";
 import { Grid2X2Check, ShoppingCart, LucideEdit, LucidePlus } from "lucide-react";
+
 
 export default function HeroSection() {
   return (
@@ -31,13 +33,19 @@ export default function HeroSection() {
           </p>
 
           <div className="mt-10 flex flex-wrap gap-4">
-            <button className="bg-indigo-500 hover:bg-indigo-400 text-white px-6 py-3 rounded-xl font-medium transition">
-              Shop Now
-            </button>
+            <Link
+             href="/products"
+               className="bg-indigo-500 hover:bg-indigo-400 text-white px-6 py-3 rounded-xl font-medium transition">
+                Shop Now
+              
+            </Link>
 
-            <button className="border border-white/70 text-white hover:bg-white/10 px-6 py-3 rounded-xl font-medium transition">
-              Explore Artisans
-            </button>
+            <Link 
+            href="/artisans"
+               className="border border-white/70 text-white hover:bg-white/10 px-6 py-3 rounded-xl font-medium transition">
+                Explore Artisans
+              
+            </Link>
           </div>
         </div>
       </div>

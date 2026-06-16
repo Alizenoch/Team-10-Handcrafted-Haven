@@ -18,8 +18,19 @@ export async function POST(req: Request) {
 
   const token = signToken({ id: user.id, email: user.email });
 
-  const res = NextResponse.json({ message: "Login successful", user });
-  res.cookies.set("token", token, { httpOnly: true, path: "/" });
-  return res;
+
+const { password: hashedPassword, ...safeUser } = user;
+
+const res = NextResponse.json({
+  message: "Login successful",
+  user: safeUser,
+});
+
+res.cookies.set("token", token, {
+  httpOnly: true,
+  path: "/",
+});
+
+return res;
 }
 

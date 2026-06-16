@@ -97,11 +97,11 @@ Dashboard </h1>
 
    <div className="grid md:grid-cols-3 gap-6">
   <Link
-    href="/products"
+    href="/dashboard/my-products"
     className="bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition"
   >
     <h3 className="text-xl font-semibold">
-      📦 Products
+      📦 My Products
     </h3>
 
 <p className="text-gray-500 mt-2">
@@ -109,7 +109,7 @@ Dashboard </h1>
 </p>
   </Link>
   <Link
-    href="/products"
+    href="/dashboard/add-product"
     className="bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition"
   >
     <h3 className="text-xl font-semibold">

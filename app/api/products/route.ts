@@ -1,4 +1,7 @@
 // app/api/products/route.ts
+
+import { cookies } from "next/headers";
+import { verifyToken } from "@/app/lib/auth";
 import { NextResponse } from "next/server";
 import prisma from "@/app/lib/db";
 
@@ -26,14 +29,41 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { title, price, description, category, image, sellerId, artisanId } = body;
+    const { title, price, description, category, image, artisanId } = body;
 
-    if (!title || !description || !price || !sellerId) {
-      return NextResponse.json(
-        { error: "Missing required fields" },
-        { status: 400 }
-      );
-    }
+    const cookieStore = await cookies();
+const token = cookieStore.get("token")?.value;
+
+console.log("TOKEN:", token);
+
+if (!token) {
+  return NextResponse.json(
+    { error: "Unauthorized" },
+    { status: 401 }
+  );
+}
+
+const user = verifyToken(token) as {
+  id: number;
+  email: string;
+} | null;
+
+console.log("USER:", user);
+
+
+if (!user) {
+  return NextResponse.json(
+    { error: "Unauthorized" },
+    { status: 401 }
+  );
+}
+
+if (!title || !description || !price) {
+  return NextResponse.json(
+    { error: "Missing required fields" },
+    { status: 400 }
+  );
+}
 
     const product = await prisma.product.create({
       data: {
@@ -42,7 +72,7 @@ export async function POST(req: Request) {
         price: parseFloat(price), // ensure Float type
         category,
         image,
-        sellerId,
+        sellerId: user.id,
         artisanId: artisanId ? Number(artisanId) : null, // ✅ link product to artisan if provided
       },
       include: { artisan: true }, // return artisan info with product

@@ -24,22 +24,32 @@ export async function GET() {
   }
 
   const user = await db.user.findUnique({
-    where: { id: (decoded as any).id },
-    include: {
-      profile: true,
-      products: true,
-      reviews: true,
-    },
-  });
+  where: { id: (decoded as any).id },
+  include: {
+    profile: true,
+    products: true,
+    reviews: true,
+  },
+});
 
-  if (!user) {
-    return NextResponse.json(
-      { error: "User not found" },
-      { status: 404 }
-    );
-  }
+if (!user) {
+  return NextResponse.json(
+    { error: "User not found" },
+    { status: 404 }
+  );
+}
 
-  return NextResponse.json({ user });
+const { password, ...safeUser } = user;
+
+return NextResponse.json({
+  user: safeUser,
+});
+
+ 
+
+return NextResponse.json({
+  user: safeUser,
+});
 }
 export async function PUT(request: Request) {
   const cookieStore = await cookies();
