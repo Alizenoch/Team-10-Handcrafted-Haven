@@ -8,17 +8,53 @@ import prisma from "@/app/lib/db";
 export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
+
     const artisanId = searchParams.get("artisanId");
+    const search = searchParams.get("search");
 
     const products = await prisma.product.findMany({
-      where: artisanId ? { artisanId: Number(artisanId) } : {},
-      include: { artisan: true }, // ✅ include artisan relation so you can show artisan name
-      orderBy: { id: "desc" },
+      where: {
+        ...(artisanId && {
+          artisanId: Number(artisanId),
+        }),
+
+        ...(search && {
+          OR: [
+            {
+              title: {
+                contains: search,
+                mode: "insensitive",
+              },
+            },
+            {
+              description: {
+                contains: search,
+                mode: "insensitive",
+              },
+            },
+            {
+              category: {
+                contains: search,
+                mode: "insensitive",
+              },
+            },
+          ],
+        }),
+      },
+
+      include: {
+        artisan: true,
+      },
+
+      orderBy: {
+        id: "desc",
+      },
     });
 
     return NextResponse.json(products);
   } catch (error) {
     console.error("GET PRODUCTS ERROR:", error);
+
     return NextResponse.json(
       { error: "Failed to fetch products" },
       { status: 500 }

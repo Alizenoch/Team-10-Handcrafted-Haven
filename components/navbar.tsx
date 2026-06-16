@@ -18,6 +18,7 @@ import {
  export default function Navbar() {
   const router = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
   const checkAuthStatus = async () => {
@@ -44,6 +45,14 @@ import {
     router.push("/");
     router.refresh();
   };
+
+  const handleSearch = (e: React.FormEvent) => {
+  e.preventDefault();
+
+  if (!search.trim()) return;
+
+  router.push(`/products?search=${search}`);
+};
 
   return (
     <>
@@ -87,47 +96,57 @@ import {
             <Link href="/about">About</Link>
           </nav>
 
+          
           {/* SEARCH + ICONS */}
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-1 border border-gray-300 px-4 py-1 rounded">
-              <Search size={16} />
-              <input
-                type="text"
-                placeholder="Search..."
-                className="outline-none text-sm"
-              />
-            </div>
+<div className="flex items-center gap-4">
 
-            
-            <Link
-            href="/cart"
-           className="flex items-center gap-1"
-           >
-           <ShoppingCart size={20} />
-          <span>Cart</span>
-          </Link>
-            
+  <form
+    onSubmit={handleSearch}
+    className="flex items-center gap-1 border border-gray-300 px-4 py-1 rounded"
+  >
+    <Search size={16} />
 
-            <div className="flex items-center gap-2">
-            {!isLoggedIn ? (
-            <Link
-           href="/auth/login"
-            className="px-3 py-2 text-sm border rounded hover:bg-gray-100"
-         >
-         Login
-         </Link>
-         ) : (
-        <button
-       onClick={handleLogout}
+    <input
+      type="text"
+      value={search}
+      onChange={(e) => setSearch(e.target.value)}
+      placeholder="Search..."
+      className="outline-none text-sm"
+    />
+  </form>
+
+  <Link
+    href="/cart"
+    className="flex items-center gap-1"
+  >
+    <ShoppingCart size={20} />
+    <span>Cart</span>
+  </Link>
+
+  <div className="flex items-center gap-2">
+  {!isLoggedIn ? (
+    <Link
+      href="/auth/login"
+      className="px-3 py-2 text-sm border rounded hover:bg-gray-100"
+    >
+      Login
+    </Link>
+  ) : (
+    <button
+      onClick={handleLogout}
       className="px-3 py-2 text-sm bg-red-500 text-white rounded hover:bg-red-600"
-      >
+    >
       Logout
-      </button>
-        )}
-         </div>
+    </button>
+  )}
+</div>
+
+</div>
+          
           </div>
-        </div>
-      </header>
+        
+       </header>
+        
 
       {/* ================= TABLET ================= */}
       <header className="hidden md:flex lg:hidden fixed top-0 w-full bg-white border-b z-50">

@@ -15,15 +15,24 @@ import AddToCartButton from "@/components/button/addCartButton";
 
   const searchParams = useSearchParams();
   const artisanId = searchParams.get("artisanId");
+  const search = searchParams.get("search");
 
   useEffect(() => {
     let isMounted = true;
 
     async function fetchProducts() {
       try {
-        const url = artisanId
-          ? `/api/products?artisanId=${artisanId}`
-          : "/api/products";
+        let url = "/api/products";
+
+if (artisanId) {
+  url += `?artisanId=${artisanId}`;
+}
+
+if (search) {
+  url += artisanId
+    ? `&search=${search}`
+    : `?search=${search}`;
+}
 
         const response = await fetch(url);
         if (!response.ok) throw new Error("Network response error");
@@ -48,7 +57,7 @@ import AddToCartButton from "@/components/button/addCartButton";
     return () => {
       isMounted = false;
     };
-  }, [artisanId]);
+  }, [artisanId, search]);
 
   if (loading) {
     return (
