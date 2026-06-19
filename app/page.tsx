@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <main>
       <HeroSection />
-    <div className="container mx-auto ">
+    <div className="container mx-auto pt-4 px-4">
       <FeaturesProductsPage />
     </div>
 
